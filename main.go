@@ -53,6 +53,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	wwwroot := os.Getenv("wwwroot")
+	//fmt.Println(wwwroot)
 
 	router := mux.NewRouter()
 	router.HandleFunc("/hello", handler).Methods("GET")
@@ -60,15 +61,15 @@ func main() {
 	router.HandleFunc("/", login).Methods("POST")
 	router.HandleFunc("/secret", secret).Methods("GET")
 
-	staticFileDirectory := http.Dir(wwwroot)
-	staticFileHandler := http.StripPrefix(wwwroot + "assets/", http.FileServer(staticFileDirectory))
-	router.PathPrefix(wwwroot + "assets/").Handler(staticFileHandler).Methods("GET")
+	staticFileDirectory := http.Dir(wwwroot + "assets/")
+	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
+	router.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 
 	http.ListenAndServe(":8080", router)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles(wwwroot + "www/base.html", wwwroot + "www/index.html"))
+	tmpl := template.Must(template.ParseFiles(wwwroot+"www/base.html", wwwroot+"www/index.html"))
 	data := pData{Name: "Vasya"}
 	//tmpl.ExecuteTemplate(w, "layout", data)
 	tmpl.Execute(w, data)
