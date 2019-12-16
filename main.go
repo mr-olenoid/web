@@ -10,6 +10,8 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+var wwwroot string
+
 type pData struct {
 	Name string
 }
