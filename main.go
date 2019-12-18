@@ -17,7 +17,7 @@ type pData struct {
 }
 
 var (
-	key   = []byte("very-randomly-secure-key")
+	key   = []byte("very-randomly-secure-key-2")
 	store = sessions.NewCookieStore(key)
 )
 
